@@ -23,4 +23,4 @@ target_sources(
         PRIVATE
         "src/DB_test.cc"
 )
-target_link_libraries(lynxdb_test lynxdb gtest)
+target_link_libraries(lynxdb_test lynxdb GTest::gtest_main)
