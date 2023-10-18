@@ -30,6 +30,10 @@ namespace LynxDB {
     public:
         Bytes() = delete;
         explicit Bytes(const std::string& s) : _size(s.size()), _data(s.data()) {};
+
+        bool operator==(const Bytes& b) const;
+        bool operator>(const Bytes& b) const;
+        bool operator<(const Bytes& b) const;
     };
 
 } // LynxDB

@@ -20,4 +20,15 @@
 
 namespace LynxDB {
 
+    bool Bytes::operator==(const Bytes &b) const {
+        return true;
+    }
+
+    bool Bytes::operator>(const Bytes &b) const {
+        return true;
+    }
+
+    bool Bytes::operator<(const Bytes &b) const {
+        return true;
+    }
 } // LynxDB

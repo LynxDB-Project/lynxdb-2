@@ -29,17 +29,17 @@ namespace LynxDB {
 
     class DB {
     private:
-
+        const std::filesystem::path& _dbPath;
     public:
         DB() = delete;
-        DB(std::filesystem::path& dbPath);
+        explicit DB(const std::filesystem::path& dbPath) : _dbPath(dbPath) {};
         ~DB();
 
-        void insert(Bytes& key, Bytes& value);
-        Bytes& find(Bytes& key);
-        void remove(Bytes& key);
-        std::vector<std::pair<Bytes&, Bytes&>>& rangeBefore(Bytes& begin, int limit);
-        std::vector<std::pair<Bytes&, Bytes&>>& rangeNext(Bytes& begin, int limit);
+        void insert(const Bytes& key, const Bytes& value);
+        Bytes& find(const Bytes& key);
+        void remove(const Bytes& key);
+        std::vector<std::pair<Bytes&, Bytes&>>& rangeBefore(const Bytes& begin, int limit);
+        std::vector<std::pair<Bytes&, Bytes&>>& rangeNext(const Bytes& begin, int limit);
     };
 
 } // LynxDB

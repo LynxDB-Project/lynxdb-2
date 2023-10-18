@@ -20,8 +20,34 @@
 #include <gtest/gtest.h>
 
 #include "DB.h"
+#include "Bytes.h"
 
 TEST(DBTest, InitDB) {
-    std::filesystem::path dbPath("./");
+    std::filesystem::path dbPath("./db_test");
     LynxDB::DB db(dbPath);
+}
+
+TEST(DB_TEST, Insert) {
+    std::filesystem::path dbPath("./db_test");
+    LynxDB::DB db(dbPath);
+
+    LynxDB::Bytes key("key"), value("value");
+    db.insert(key, value);
+}
+
+TEST(DB_TEST, Find) {
+    std::filesystem::path dbPath("./db_test");
+    LynxDB::DB db(dbPath);
+
+    LynxDB::Bytes key("key"), value("value");
+    auto findValue = db.find(key);
+    ASSERT_EQ(findValue, value);
+}
+
+TEST(DB_TEST, Remove) {
+    std::filesystem::path dbPath("./db_test");
+    LynxDB::DB db(dbPath);
+
+    LynxDB::Bytes key("key");
+    db.remove(key);
 }

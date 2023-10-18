@@ -19,33 +19,29 @@
 #include "DB.h"
 
 namespace LynxDB {
-    DB::DB(std::filesystem::path& dbPath) {
-
-    }
-
     DB::~DB() {
 
     }
 
-    void DB::insert(Bytes &key, Bytes &value) {
+    void DB::insert(const Bytes &key, const Bytes &value) {
 
     }
 
-    Bytes &DB::find(Bytes &key) {
+    Bytes &DB::find(const Bytes &key) {
         auto *value = new LynxDB::Bytes("value");
         return *value;
     }
 
-    void DB::remove(Bytes &key) {
+    void DB::remove(const Bytes &key) {
 
     }
 
-    std::vector<std::pair<Bytes &, Bytes &>> &DB::rangeBefore(Bytes &begin, int limit) {
+    std::vector<std::pair<Bytes &, Bytes &>> &DB::rangeBefore(const Bytes &begin, int limit) {
         auto pairs = new std::vector<std::pair<Bytes&, Bytes&>>;
         return *pairs;
     }
 
-    std::vector<std::pair<Bytes &, Bytes &>> &DB::rangeNext(Bytes &begin, int limit) {
+    std::vector<std::pair<Bytes &, Bytes &>> &DB::rangeNext(const Bytes &begin, int limit) {
         auto pairs = new std::vector<std::pair<Bytes&, Bytes&>>;
         return *pairs;
     }
