@@ -34,6 +34,8 @@ namespace LynxDB {
         bool operator==(const Bytes& b) const;
         bool operator>(const Bytes& b) const;
         bool operator<(const Bytes& b) const;
+
+        bool empty();
     };
 
 } // LynxDB

@@ -10,6 +10,18 @@ target_sources(
         "src/DB.cc"
         "src/Bytes.h"
         "src/Bytes.cc"
+        "src/MemTable.h"
+        "src/MemTable.cc"
+        "src/SkipList.h"
+        "src/SkipList.cc"
+        "src/SSTable.h"
+        "src/SSTable.cc"
+        "src/BloomFilter.h"
+        "src/BloomFilter.cc"
+        "src/Level.h"
+        "src/Level.cc"
+        "src/DeletedException.h"
+        "src/DeletedException.cc"
         PUBLIC
         "src/DB.h"
 )
@@ -17,10 +29,27 @@ target_sources(
 # lynxdb test
 add_subdirectory("dependency/googletest")
 
-add_executable(lynxdb_test)
-target_sources(
-        lynxdb_test
-        PRIVATE
-        "src/DB_test.cc"
+set(
+        TESTS
+        "DB_test"
+        "Bytes_test"
+        "MemTable_test"
+        "SkipList_test"
+        "SSTable_test"
+        "Level_test"
 )
-target_link_libraries(lynxdb_test lynxdb GTest::gtest_main)
+
+function(GenerateTest NAME)
+    add_executable(${NAME})
+    target_sources(
+            ${NAME}
+            PRIVATE
+            "src/${NAME}.cc"
+    )
+    target_link_libraries(${NAME} lynxdb GTest::gtest_main)
+endfunction(GenerateTest)
+
+foreach (TEST ${TESTS})
+    message(STATUS "Generate Test: ${TEST}")
+    GenerateTest(${TEST})
+endforeach ()

@@ -22,24 +22,33 @@
 #include <vector>
 #include <sys/types.h>
 #include <filesystem>
+#include <list>
 
 #include "Bytes.h"
+#include "MemTable.h"
+#include "Level.h"
+#include "DeletedException.h"
 
 namespace LynxDB {
 
     class DB {
     private:
         const std::filesystem::path& _dbPath;
+        MemTable _mutable;
+        MemTable _immutable;
+        Level* _level;
     public:
         DB() = delete;
-        explicit DB(const std::filesystem::path& dbPath) : _dbPath(dbPath) {};
+        explicit DB(const std::filesystem::path& dbPath) : _dbPath(dbPath), _level(nullptr) {
+            std::filesystem::create_directory(dbPath);
+        };
         ~DB();
 
         void insert(const Bytes& key, const Bytes& value);
-        Bytes& find(const Bytes& key);
+        Bytes find(const Bytes& key);
         void remove(const Bytes& key);
-        std::vector<std::pair<Bytes&, Bytes&>>& rangeBefore(const Bytes& begin, int limit);
-        std::vector<std::pair<Bytes&, Bytes&>>& rangeNext(const Bytes& begin, int limit);
+        std::vector<std::pair<Bytes&, Bytes&>> rangeBefore(const Bytes& begin, int limit);
+        std::vector<std::pair<Bytes&, Bytes&>> rangeNext(const Bytes& begin, int limit);
     };
 
 } // LynxDB

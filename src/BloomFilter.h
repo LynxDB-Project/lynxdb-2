@@ -16,23 +16,15 @@
 // Copyright (c) 2023 Baili Zhang All rights reserved.
 //
 
-#include "Bytes.h"
+#ifndef LYNXDB_BLOOMFILTER_H
+#define LYNXDB_BLOOMFILTER_H
 
 namespace LynxDB {
 
-    bool Bytes::operator==(const Bytes &b) const {
-        return true;
-    }
+    class BloomFilter {
 
-    bool Bytes::operator>(const Bytes &b) const {
-        return true;
-    }
+    };
 
-    bool Bytes::operator<(const Bytes &b) const {
-        return true;
-    }
-
-    bool Bytes::empty() {
-        return false;
-    }
 } // LynxDB
+
+#endif //LYNXDB_BLOOMFILTER_H

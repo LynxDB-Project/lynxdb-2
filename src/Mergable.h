@@ -16,23 +16,21 @@
 // Copyright (c) 2023 Baili Zhang All rights reserved.
 //
 
+#ifndef LYNXDB_MERGABLE_H
+#define LYNXDB_MERGABLE_H
+
+#include <vector>
+
 #include "Bytes.h"
 
 namespace LynxDB {
 
-    bool Bytes::operator==(const Bytes &b) const {
-        return true;
-    }
+    class Mergable {
+    public:
+        virtual std::vector<std::pair<Bytes&, Bytes&>> elements();
+        virtual void merge(const Mergable& m);
+    };
 
-    bool Bytes::operator>(const Bytes &b) const {
-        return true;
-    }
-
-    bool Bytes::operator<(const Bytes &b) const {
-        return true;
-    }
-
-    bool Bytes::empty() {
-        return false;
-    }
 } // LynxDB
+
+#endif //LYNXDB_MERGABLE_H

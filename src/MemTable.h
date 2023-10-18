@@ -16,23 +16,21 @@
 // Copyright (c) 2023 Baili Zhang All rights reserved.
 //
 
-#include "Bytes.h"
+#ifndef LYNXDB_MEMTABLE_H
+#define LYNXDB_MEMTABLE_H
+
+#include "Mergable.h"
 
 namespace LynxDB {
 
-    bool Bytes::operator==(const Bytes &b) const {
-        return true;
-    }
+    class MemTable : public Mergable {
 
-    bool Bytes::operator>(const Bytes &b) const {
-        return true;
-    }
+    public:
+        bool full();
+        void insert(const Bytes& key, const Bytes& value);
+        LynxDB::Bytes find(const Bytes& key);
+    };
 
-    bool Bytes::operator<(const Bytes &b) const {
-        return true;
-    }
-
-    bool Bytes::empty() {
-        return false;
-    }
 } // LynxDB
+
+#endif //LYNXDB_MEMTABLE_H

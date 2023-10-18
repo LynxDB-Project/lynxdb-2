@@ -16,23 +16,20 @@
 // Copyright (c) 2023 Baili Zhang All rights reserved.
 //
 
-#include "Bytes.h"
+#ifndef LYNXDB_SKIPLIST_H
+#define LYNXDB_SKIPLIST_H
 
 namespace LynxDB {
 
-    bool Bytes::operator==(const Bytes &b) const {
-        return true;
-    }
+    class SkipListNode {
+    private:
+        SkipListNode* _next[32];
+    };
 
-    bool Bytes::operator>(const Bytes &b) const {
-        return true;
-    }
+    class SkipList {
 
-    bool Bytes::operator<(const Bytes &b) const {
-        return true;
-    }
+    };
 
-    bool Bytes::empty() {
-        return false;
-    }
 } // LynxDB
+
+#endif //LYNXDB_SKIPLIST_H

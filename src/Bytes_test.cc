@@ -15,24 +15,3 @@
 //
 // Copyright (c) 2023 Baili Zhang All rights reserved.
 //
-
-#include "Bytes.h"
-
-namespace LynxDB {
-
-    bool Bytes::operator==(const Bytes &b) const {
-        return true;
-    }
-
-    bool Bytes::operator>(const Bytes &b) const {
-        return true;
-    }
-
-    bool Bytes::operator<(const Bytes &b) const {
-        return true;
-    }
-
-    bool Bytes::empty() {
-        return false;
-    }
-} // LynxDB

@@ -16,23 +16,19 @@
 // Copyright (c) 2023 Baili Zhang All rights reserved.
 //
 
+#ifndef LYNXDB_LEVEL_H
+#define LYNXDB_LEVEL_H
+
+#include "Mergable.h"
 #include "Bytes.h"
 
 namespace LynxDB {
 
-    bool Bytes::operator==(const Bytes &b) const {
-        return true;
-    }
+    class Level : public Mergable {
+    public:
+        Bytes find(const Bytes& key);
+    };
 
-    bool Bytes::operator>(const Bytes &b) const {
-        return true;
-    }
-
-    bool Bytes::operator<(const Bytes &b) const {
-        return true;
-    }
-
-    bool Bytes::empty() {
-        return false;
-    }
 } // LynxDB
+
+#endif //LYNXDB_LEVEL_H

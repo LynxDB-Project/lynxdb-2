@@ -24,25 +24,50 @@ namespace LynxDB {
     }
 
     void DB::insert(const Bytes &key, const Bytes &value) {
+        if(_mutable.full()) {
+            LynxDB::MemTable needMerge = _immutable;
+            _immutable = _mutable;
+            _mutable = LynxDB::MemTable();
+
+            if(_level == nullptr) {
+                _level = new Level;
+            }
+
+            _level->merge(needMerge);
+        }
+
+        _mutable.insert(key, value);
+    }
+
+    Bytes DB::find(const Bytes &key) {
+        try {
+            LynxDB::Bytes value = _mutable.find(key);
+            if(!value.empty()) {
+                return value;
+            }
+
+            value = _immutable.find(key);
+            if(!value.empty()) {
+                return value;
+            }
+
+            return _level->find(key);
+        } catch (DeletedException e) {
+            // handle key deleted...
+        }
+    }
+
+    void DB::remove(const Bytes& key) {
 
     }
 
-    Bytes &DB::find(const Bytes &key) {
-        auto *value = new LynxDB::Bytes("value");
-        return *value;
+    std::vector<std::pair<Bytes &, Bytes &>> DB::rangeBefore(const Bytes &begin, int limit) {
+        std::vector<std::pair<Bytes&, Bytes&>> pairs;
+        return pairs;
     }
 
-    void DB::remove(const Bytes &key) {
-
-    }
-
-    std::vector<std::pair<Bytes &, Bytes &>> &DB::rangeBefore(const Bytes &begin, int limit) {
-        auto pairs = new std::vector<std::pair<Bytes&, Bytes&>>;
-        return *pairs;
-    }
-
-    std::vector<std::pair<Bytes &, Bytes &>> &DB::rangeNext(const Bytes &begin, int limit) {
-        auto pairs = new std::vector<std::pair<Bytes&, Bytes&>>;
-        return *pairs;
+    std::vector<std::pair<Bytes &, Bytes &>> DB::rangeNext(const Bytes &begin, int limit) {
+        std::vector<std::pair<Bytes&, Bytes&>> pairs;
+        return pairs;
     }
 } // LynxDB

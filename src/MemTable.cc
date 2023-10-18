@@ -16,23 +16,18 @@
 // Copyright (c) 2023 Baili Zhang All rights reserved.
 //
 
-#include "Bytes.h"
+#include "MemTable.h"
 
 namespace LynxDB {
-
-    bool Bytes::operator==(const Bytes &b) const {
-        return true;
-    }
-
-    bool Bytes::operator>(const Bytes &b) const {
-        return true;
-    }
-
-    bool Bytes::operator<(const Bytes &b) const {
-        return true;
-    }
-
-    bool Bytes::empty() {
+    bool MemTable::full() {
         return false;
+    }
+
+    void MemTable::insert(const Bytes& key, const Bytes& value) {
+
+    }
+
+    LynxDB::Bytes MemTable::find(const Bytes& key) {
+        return LynxDB::Bytes("");
     }
 } // LynxDB
