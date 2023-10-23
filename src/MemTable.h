@@ -19,12 +19,11 @@
 #ifndef LYNXDB_MEMTABLE_H
 #define LYNXDB_MEMTABLE_H
 
-#include "Mergable.h"
+#include "Bytes.h"
 
 namespace LynxDB {
 
-    class MemTable : public Mergable {
-
+    class MemTable {
     public:
         bool full();
         void insert(const Bytes& key, const Bytes& value);

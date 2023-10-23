@@ -20,8 +20,9 @@ target_sources(
         "src/BloomFilter.cc"
         "src/Level.h"
         "src/Level.cc"
+        "src/LevelTree.h"
+        "src/LevelTree.cc"
         "src/DeletedException.h"
-        "src/DeletedException.cc"
         PUBLIC
         "src/DB.h"
 )

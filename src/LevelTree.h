@@ -1,6 +1,6 @@
 //
-// Created by Baili Zhang on 2023/10/18.
-// 
+// Created by Baili Zhang on 2023/10/23.
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -16,7 +16,31 @@
 // Copyright (c) 2023 Baili Zhang All rights reserved.
 //
 
-#include "DeletedException.h"
+#ifndef LYNXDB_LEVELTREE_H
+#define LYNXDB_LEVELTREE_H
+
+#include <filesystem>
+#include <list>
+
+#include "Bytes.h"
+#include "Level.h"
+#include "MemTable.h"
 
 namespace LynxDB {
-} // LynxDB
+
+    class LevelTree {
+    private:
+        std::list<Level> _levels;
+
+    public:
+        LevelTree() = delete;
+        explicit LevelTree(const std::filesystem::path &dbPath) {}
+        ~LevelTree() = default;
+
+        void merge(MemTable *memTable);
+        Bytes find(const Bytes &key);
+    };
+
+}// namespace LynxDB
+
+#endif//LYNXDB_LEVELTREE_H

@@ -1,6 +1,6 @@
 //
 // Created by Baili Zhang on 2023/10/18.
-// 
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -19,55 +19,50 @@
 #include "DB.h"
 
 namespace LynxDB {
-    DB::~DB() {
+    DB::DB(const std::filesystem::path& dbPath)
+        : _mutable(new MemTable)
+        , _immutable(nullptr)
+        , _levelTree(new LevelTree(dbPath)) {}
 
+    DB::~DB() {
+        delete _mutable;
+        delete _levelTree;
     }
 
-    void DB::insert(const Bytes &key, const Bytes &value) {
-        if(_mutable.full()) {
-            LynxDB::MemTable needMerge = _immutable;
+    void DB::insert(const Bytes& key, const Bytes& value) {
+        if (_mutable->full()) {
+            MemTable* needMerge = _immutable;
             _immutable = _mutable;
-            _mutable = LynxDB::MemTable();
-
-            if(_level == nullptr) {
-                _level = new Level;
-            }
-
-            _level->merge(needMerge);
+            _mutable = new MemTable();
+            _levelTree->merge(needMerge);
         }
 
-        _mutable.insert(key, value);
+        _mutable->insert(key, value);
     }
 
-    Bytes DB::find(const Bytes &key) {
+    Bytes DB::find(const Bytes& key) {
         try {
-            LynxDB::Bytes value = _mutable.find(key);
-            if(!value.empty()) {
-                return value;
-            }
+            LynxDB::Bytes value = _mutable->find(key);
+            if (!value.empty()) { return value; }
 
-            value = _immutable.find(key);
-            if(!value.empty()) {
-                return value;
-            }
+            value = _immutable->find(key);
+            if (!value.empty()) { return value; }
 
-            return _level->find(key);
-        } catch (DeletedException e) {
+            return _levelTree->find(key);
+        } catch (DeletedException& e) {
             // handle key deleted...
         }
     }
 
-    void DB::remove(const Bytes& key) {
+    void DB::remove(const Bytes& key) {}
 
-    }
-
-    std::vector<std::pair<Bytes &, Bytes &>> DB::rangeBefore(const Bytes &begin, int limit) {
+    std::vector<std::pair<Bytes&, Bytes&>> DB::rangeBefore(const Bytes& begin, int limit) {
         std::vector<std::pair<Bytes&, Bytes&>> pairs;
         return pairs;
     }
 
-    std::vector<std::pair<Bytes &, Bytes &>> DB::rangeNext(const Bytes &begin, int limit) {
+    std::vector<std::pair<Bytes&, Bytes&>> DB::rangeNext(const Bytes& begin, int limit) {
         std::vector<std::pair<Bytes&, Bytes&>> pairs;
         return pairs;
     }
-} // LynxDB
+}// namespace LynxDB

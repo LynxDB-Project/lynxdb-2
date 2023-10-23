@@ -1,5 +1,5 @@
 //
-// Created by Baili Zhang on 2023/10/18.
+// Created by Baili Zhang on 2023/10/23.
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,21 +16,14 @@
 // Copyright (c) 2023 Baili Zhang All rights reserved.
 //
 
-#ifndef LYNXDB_MERGABLE_H
-#define LYNXDB_MERGABLE_H
-
-#include <vector>
-
-#include "Bytes.h"
+#include "LevelTree.h"
 
 namespace LynxDB {
+    void LevelTree::merge(MemTable* memTable) {
 
-    class Mergable {
-    public:
-        virtual std::vector<std::pair<Bytes&, Bytes&>> elements();
-        virtual void merge(const Mergable& m);
-    };
+    }
 
+    Bytes LevelTree::find(const Bytes& key) {
+        return Bytes("");
+    }
 } // LynxDB
-
-#endif //LYNXDB_MERGABLE_H

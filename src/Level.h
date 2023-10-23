@@ -19,12 +19,11 @@
 #ifndef LYNXDB_LEVEL_H
 #define LYNXDB_LEVEL_H
 
-#include "Mergable.h"
 #include "Bytes.h"
 
 namespace LynxDB {
 
-    class Level : public Mergable {
+    class Level {
     public:
         Bytes find(const Bytes& key);
     };

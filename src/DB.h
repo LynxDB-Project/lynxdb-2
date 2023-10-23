@@ -1,6 +1,6 @@
 //
 // Created by Baili Zhang on 2023/10/18.
-// 
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -19,29 +19,27 @@
 #ifndef LYNXDB_DB_H
 #define LYNXDB_DB_H
 
-#include <vector>
-#include <sys/types.h>
 #include <filesystem>
 #include <list>
+#include <sys/types.h>
+#include <vector>
 
 #include "Bytes.h"
-#include "MemTable.h"
-#include "Level.h"
 #include "DeletedException.h"
+#include "LevelTree.h"
+#include "MemTable.h"
 
 namespace LynxDB {
 
     class DB {
     private:
-        const std::filesystem::path& _dbPath;
-        MemTable _mutable;
-        MemTable _immutable;
-        Level* _level;
+        MemTable* _mutable;
+        MemTable* _immutable;
+        LevelTree* _levelTree;
+
     public:
         DB() = delete;
-        explicit DB(const std::filesystem::path& dbPath) : _dbPath(dbPath), _level(nullptr) {
-            std::filesystem::create_directory(dbPath);
-        };
+        explicit DB(const std::filesystem::path& dbPath);
         ~DB();
 
         void insert(const Bytes& key, const Bytes& value);
@@ -51,6 +49,6 @@ namespace LynxDB {
         std::vector<std::pair<Bytes&, Bytes&>> rangeNext(const Bytes& begin, int limit);
     };
 
-} // LynxDB
+}// namespace LynxDB
 
-#endif //LYNXDB_DB_H
+#endif//LYNXDB_DB_H

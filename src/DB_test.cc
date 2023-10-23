@@ -1,6 +1,6 @@
 //
 // Created by Baili Zhang on 2023/10/18.
-// 
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -19,8 +19,9 @@
 #include <filesystem>
 #include <gtest/gtest.h>
 
-#include "DB.h"
 #include "Bytes.h"
+#include "DB.h"
+
 
 TEST(DBTest, InitDB) {
     std::filesystem::path dbPath("./db_test");

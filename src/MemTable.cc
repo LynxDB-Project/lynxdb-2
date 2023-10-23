@@ -27,7 +27,7 @@ namespace LynxDB {
 
     }
 
-    LynxDB::Bytes MemTable::find(const Bytes& key) {
+    Bytes MemTable::find(const Bytes& key) {
         return LynxDB::Bytes("");
     }
 } // LynxDB
