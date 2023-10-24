@@ -26,6 +26,7 @@ namespace LynxDB {
 
     DB::~DB() {
         delete _mutable;
+        delete _immutable;
         delete _levelTree;
     }
 

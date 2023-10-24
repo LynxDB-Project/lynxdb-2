@@ -30,15 +30,15 @@ namespace LynxDB {
 
     class LevelTree {
     private:
-        std::list<Level> _levels;
+        std::list<Level*> _levels;
 
     public:
         LevelTree() = delete;
-        explicit LevelTree(const std::filesystem::path &dbPath) {}
-        ~LevelTree() = default;
+        explicit LevelTree(const std::filesystem::path& dbPath);
+        ~LevelTree();
 
-        void merge(MemTable *memTable);
-        Bytes find(const Bytes &key);
+        void merge(MemTable* memTable);
+        Bytes find(const Bytes& key);
     };
 
 }// namespace LynxDB

@@ -1,6 +1,6 @@
 //
 // Created by Baili Zhang on 2023/10/18.
-// 
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -19,7 +19,6 @@
 #include "Level.h"
 
 namespace LynxDB {
-    Bytes Level::find(const Bytes& key) {
-        return Bytes("");
-    }
-} // LynxDB
+    Level::Level(int levelNo) {}
+    Bytes Level::find(const Bytes& key) { return Bytes(""); }
+}// namespace LynxDB

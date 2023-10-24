@@ -1,6 +1,6 @@
 //
 // Created by Baili Zhang on 2023/10/23.
-// 
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -19,11 +19,29 @@
 #include "LevelTree.h"
 
 namespace LynxDB {
-    void LevelTree::merge(MemTable* memTable) {
+    LevelTree::LevelTree(const std::filesystem::path& dbPath) {
+        std::filesystem::directory_iterator dirItr(dbPath);
 
+        for (auto& dir: dirItr) {
+            if (dir.is_directory()) {
+                std::string subDirName = dir.path().filename().string();
+                try {
+                    int levelNo = std::stoi(subDirName);
+                    _levels.push_back(new Level(levelNo));
+                } catch (std::invalid_argument& e) {
+                    // handle exception ...
+                } catch (std::out_of_range& e) {
+                    // handle exception ...
+                }
+            }
+        }
     }
 
-    Bytes LevelTree::find(const Bytes& key) {
-        return Bytes("");
+    LevelTree::~LevelTree() {
+        for (auto level: _levels) { delete level; }
     }
-} // LynxDB
+
+    void LevelTree::merge(MemTable* memTable) {}
+
+    Bytes LevelTree::find(const Bytes& key) { return Bytes(""); }
+}// namespace LynxDB
