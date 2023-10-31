@@ -1,6 +1,6 @@
 //
 // Created by Baili Zhang on 2023/10/18.
-// 
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -19,6 +19,8 @@
 #ifndef LYNXDB_MEMTABLE_H
 #define LYNXDB_MEMTABLE_H
 
+#include <vector>
+
 #include "Bytes.h"
 
 namespace LynxDB {
@@ -27,9 +29,12 @@ namespace LynxDB {
     public:
         bool full();
         void insert(const Bytes& key, const Bytes& value);
+        void remove(const Bytes& key);
         LynxDB::Bytes find(const Bytes& key);
+        std::vector<std::pair<Bytes&, Bytes&>> rangeBefore(const Bytes& begin, int limit);
+        std::vector<std::pair<Bytes&, Bytes&>> rangeNext(const Bytes& begin, int limit);
     };
 
-} // LynxDB
+}// namespace LynxDB
 
-#endif //LYNXDB_MEMTABLE_H
+#endif//LYNXDB_MEMTABLE_H

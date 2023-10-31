@@ -55,15 +55,26 @@ namespace LynxDB {
         }
     }
 
-    void DB::remove(const Bytes& key) {}
+    void DB::remove(const Bytes& key) {
+        if (_mutable->full()) {
+            MemTable* needMerge = _immutable;
+            _immutable = _mutable;
+            _mutable = new MemTable();
+            _levelTree->merge(needMerge);
+        }
+
+        _mutable->remove(key);
+    }
 
     std::vector<std::pair<Bytes&, Bytes&>> DB::rangeBefore(const Bytes& begin, int limit) {
-        std::vector<std::pair<Bytes&, Bytes&>> pairs;
+        std::vector<std::pair<Bytes&, Bytes&>> pairs = _mutable->rangeBefore(begin, limit);
+        // TODO
         return pairs;
     }
 
     std::vector<std::pair<Bytes&, Bytes&>> DB::rangeNext(const Bytes& begin, int limit) {
-        std::vector<std::pair<Bytes&, Bytes&>> pairs;
+        std::vector<std::pair<Bytes&, Bytes&>> pairs = _mutable->rangeNext(begin, limit);
+        // TODO
         return pairs;
     }
 }// namespace LynxDB

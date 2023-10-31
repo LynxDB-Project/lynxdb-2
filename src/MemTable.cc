@@ -1,6 +1,6 @@
 //
 // Created by Baili Zhang on 2023/10/18.
-// 
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -19,15 +19,19 @@
 #include "MemTable.h"
 
 namespace LynxDB {
-    bool MemTable::full() {
-        return false;
-    }
+    bool MemTable::full() { return false; }
 
-    void MemTable::insert(const Bytes& key, const Bytes& value) {
+    void MemTable::insert(const Bytes& key, const Bytes& value) {}
 
-    }
+    void MemTable::remove(const Bytes& key) {}
 
-    Bytes MemTable::find(const Bytes& key) {
-        return LynxDB::Bytes("");
+    Bytes MemTable::find(const Bytes& key) { return LynxDB::Bytes(""); }
+
+    std::vector<std::pair<Bytes&, Bytes&>> MemTable::rangeBefore(const Bytes& begin, int limit) {
+        return std::vector<std::pair<Bytes&, Bytes&>>();
     }
-} // LynxDB
+    
+    std::vector<std::pair<Bytes&, Bytes&>> MemTable::rangeNext(const Bytes& begin, int limit) {
+        return std::vector<std::pair<Bytes&, Bytes&>>();
+    }
+}// namespace LynxDB
