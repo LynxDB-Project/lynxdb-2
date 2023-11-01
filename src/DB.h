@@ -45,8 +45,8 @@ namespace LynxDB {
         void insert(const Bytes& key, const Bytes& value);
         Bytes find(const Bytes& key);
         void remove(const Bytes& key);
-        std::vector<std::pair<Bytes&, Bytes&>> rangeBefore(const Bytes& begin, int limit);
-        std::vector<std::pair<Bytes&, Bytes&>> rangeNext(const Bytes& begin, int limit);
+        std::vector<std::pair<Bytes, Bytes>> rangeBefore(const Bytes& begin, int limit);
+        std::vector<std::pair<Bytes, Bytes>> rangeNext(const Bytes& begin, int limit);
     };
 
 }// namespace LynxDB

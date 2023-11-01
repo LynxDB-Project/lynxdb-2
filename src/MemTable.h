@@ -19,6 +19,8 @@
 #ifndef LYNXDB_MEMTABLE_H
 #define LYNXDB_MEMTABLE_H
 
+#include <unordered_map>
+#include <unordered_set>
 #include <vector>
 
 #include "Bytes.h"
@@ -31,8 +33,12 @@ namespace LynxDB {
         void insert(const Bytes& key, const Bytes& value);
         void remove(const Bytes& key);
         LynxDB::Bytes find(const Bytes& key);
-        std::vector<std::pair<Bytes&, Bytes&>> rangeBefore(const Bytes& begin, int limit);
-        std::vector<std::pair<Bytes&, Bytes&>> rangeNext(const Bytes& begin, int limit);
+
+        void rangeBefore(const Bytes& begin, int limit, std::unordered_map<Bytes, Bytes>& findPairs,
+                         std::unordered_set<Bytes>& deletedKeys);
+
+        void rangeNext(const Bytes& begin, int limit, std::unordered_map<Bytes, Bytes>& findPairs,
+                       std::unordered_set<Bytes>& deletedKeys);
     };
 
 }// namespace LynxDB

@@ -27,11 +27,10 @@ namespace LynxDB {
 
     Bytes MemTable::find(const Bytes& key) { return LynxDB::Bytes(""); }
 
-    std::vector<std::pair<Bytes&, Bytes&>> MemTable::rangeBefore(const Bytes& begin, int limit) {
-        return std::vector<std::pair<Bytes&, Bytes&>>();
-    }
-    
-    std::vector<std::pair<Bytes&, Bytes&>> MemTable::rangeNext(const Bytes& begin, int limit) {
-        return std::vector<std::pair<Bytes&, Bytes&>>();
-    }
+    void MemTable::rangeBefore(const Bytes& begin, int limit,
+                               std::unordered_map<Bytes, Bytes>& findPairs,
+                               std::unordered_set<Bytes>& deletedKeys) {}
+    void MemTable::rangeNext(const Bytes& begin, int limit,
+                             std::unordered_map<Bytes, Bytes>& findPairs,
+                             std::unordered_set<Bytes>& deletedKeys) {}
 }// namespace LynxDB

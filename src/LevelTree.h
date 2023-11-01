@@ -39,6 +39,12 @@ namespace LynxDB {
 
         void merge(MemTable* memTable);
         Bytes find(const Bytes& key);
+
+        void rangeBefore(const Bytes& begin, int limit, std::unordered_map<Bytes, Bytes>& findPairs,
+                         std::unordered_set<Bytes>& deletedKeys);
+
+        void rangeNext(const Bytes& begin, int limit, std::unordered_map<Bytes, Bytes>& findPairs,
+                       std::unordered_set<Bytes>& deletedKeys);
     };
 
 }// namespace LynxDB

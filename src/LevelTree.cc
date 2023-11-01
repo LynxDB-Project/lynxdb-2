@@ -44,4 +44,12 @@ namespace LynxDB {
     void LevelTree::merge(MemTable* memTable) {}
 
     Bytes LevelTree::find(const Bytes& key) { return Bytes(""); }
+
+    void LevelTree::rangeBefore(const Bytes& begin, int limit,
+                                std::unordered_map<Bytes, Bytes>& findPairs,
+                                std::unordered_set<Bytes>& deletedKeys) {}
+    
+    void LevelTree::rangeNext(const Bytes& begin, int limit,
+                              std::unordered_map<Bytes, Bytes>& findPairs,
+                              std::unordered_set<Bytes>& deletedKeys) {}
 }// namespace LynxDB

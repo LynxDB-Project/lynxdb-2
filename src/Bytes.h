@@ -1,6 +1,6 @@
 //
 // Created by Baili Zhang on 2023/10/18.
-// 
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -27,17 +27,30 @@ namespace LynxDB {
     private:
         const char* _data;
         size_t _size;
+
     public:
         Bytes() = delete;
-        explicit Bytes(const std::string& s) : _size(s.size()), _data(s.data()) {};
+        explicit Bytes(const std::string& s)
+            : _size(s.size())
+            , _data(s.data()){};
 
         bool operator==(const Bytes& b) const;
         bool operator>(const Bytes& b) const;
         bool operator<(const Bytes& b) const;
 
         bool empty();
+        [[nodiscard]] std::string toString() const;
     };
+}// namespace LynxDB
 
-} // LynxDB
+namespace std {
+    template<>
+    struct hash<LynxDB::Bytes> {
+        size_t operator()(const LynxDB::Bytes& b) const noexcept {
+            // TODO: Optimise code, Do not transfer to string
+            return hash<string>()(b.toString());
+        }
+    };
+}// namespace std
 
-#endif //LYNXDB_BYTES_H
+#endif//LYNXDB_BYTES_H

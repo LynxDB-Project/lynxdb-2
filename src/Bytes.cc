@@ -1,6 +1,6 @@
 //
 // Created by Baili Zhang on 2023/10/18.
-// 
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -20,19 +20,13 @@
 
 namespace LynxDB {
 
-    bool Bytes::operator==(const Bytes &b) const {
-        return true;
-    }
+    bool Bytes::operator==(const Bytes& b) const { return true; }
 
-    bool Bytes::operator>(const Bytes &b) const {
-        return true;
-    }
+    bool Bytes::operator>(const Bytes& b) const { return true; }
 
-    bool Bytes::operator<(const Bytes &b) const {
-        return true;
-    }
+    bool Bytes::operator<(const Bytes& b) const { return true; }
 
-    bool Bytes::empty() {
-        return false;
-    }
-} // LynxDB
+    bool Bytes::empty() { return false; }
+
+    std::string Bytes::toString() const { return std::string{_data}; }
+}// namespace LynxDB

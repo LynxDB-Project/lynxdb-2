@@ -16,6 +16,11 @@
 // Copyright (c) 2023 Baili Zhang All rights reserved.
 //
 
+#include <algorithm>
+#include <functional>
+#include <unordered_map>
+#include <unordered_set>
+
 #include "DB.h"
 
 namespace LynxDB {
@@ -42,17 +47,13 @@ namespace LynxDB {
     }
 
     Bytes DB::find(const Bytes& key) {
-        try {
-            LynxDB::Bytes value = _mutable->find(key);
-            if (!value.empty()) { return value; }
+        LynxDB::Bytes value = _mutable->find(key);
+        if (!value.empty()) { return value; }
 
-            value = _immutable->find(key);
-            if (!value.empty()) { return value; }
+        value = _immutable->find(key);
+        if (!value.empty()) { return value; }
 
-            return _levelTree->find(key);
-        } catch (DeletedException& e) {
-            // handle key deleted...
-        }
+        return _levelTree->find(key);
     }
 
     void DB::remove(const Bytes& key) {
@@ -66,15 +67,35 @@ namespace LynxDB {
         _mutable->remove(key);
     }
 
-    std::vector<std::pair<Bytes&, Bytes&>> DB::rangeBefore(const Bytes& begin, int limit) {
-        std::vector<std::pair<Bytes&, Bytes&>> pairs = _mutable->rangeBefore(begin, limit);
-        // TODO
+    std::vector<std::pair<Bytes, Bytes>> DB::rangeBefore(const Bytes& begin, int limit) {
+        std::unordered_map<Bytes, Bytes> findPairs;
+        std::unordered_set<Bytes> deletedKeys;
+
+        _mutable->rangeBefore(begin, limit, findPairs, deletedKeys);
+        _immutable->rangeBefore(begin, limit, findPairs, deletedKeys);
+        _levelTree->rangeBefore(begin, limit, findPairs, deletedKeys);
+
+        std::vector<std::pair<Bytes, Bytes>> pairs;
+        for (auto pair: findPairs) { pairs.emplace_back(pair); }
+
+        std::sort(pairs.begin(), pairs.end());
+
         return pairs;
     }
 
-    std::vector<std::pair<Bytes&, Bytes&>> DB::rangeNext(const Bytes& begin, int limit) {
-        std::vector<std::pair<Bytes&, Bytes&>> pairs = _mutable->rangeNext(begin, limit);
-        // TODO
+    std::vector<std::pair<Bytes, Bytes>> DB::rangeNext(const Bytes& begin, int limit) {
+        std::unordered_map<Bytes, Bytes> findPairs;
+        std::unordered_set<Bytes> deletedKeys;
+
+        _mutable->rangeNext(begin, limit, findPairs, deletedKeys);
+        _immutable->rangeNext(begin, limit, findPairs, deletedKeys);
+        _levelTree->rangeNext(begin, limit, findPairs, deletedKeys);
+
+        std::vector<std::pair<Bytes, Bytes>> pairs;
+        for (auto pair: findPairs) { pairs.emplace_back(pair); }
+
+        std::sort(pairs.begin(), pairs.end());
+
         return pairs;
     }
 }// namespace LynxDB
