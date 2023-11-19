@@ -30,7 +30,8 @@
 #include "MemTable.h"
 
 namespace LynxDB {
-
+    static int DEFAULT_MEMTABLE_SIZE = 4000;
+    
     class DB {
     private:
         MemTable* _mutable;

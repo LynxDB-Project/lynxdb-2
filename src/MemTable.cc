@@ -19,18 +19,28 @@
 #include "MemTable.h"
 
 namespace LynxDB {
-    bool MemTable::full() { return false; }
+    MemTable::MemTable(int maxCapacity)
+        : _maxCapacity(maxCapacity)
+        , _skipList(new SkipList) {}
 
-    void MemTable::insert(const Bytes& key, const Bytes& value) {}
+    MemTable::~MemTable() { delete _skipList; }
 
-    void MemTable::remove(const Bytes& key) {}
+    bool MemTable::full() { return _skipList->size() == _maxCapacity; }
 
-    Bytes MemTable::find(const Bytes& key) { return LynxDB::Bytes(""); }
+    void MemTable::insert(const Bytes& key, const Bytes& value) { _skipList->insert(key, value); }
+
+    void MemTable::remove(const Bytes& key) { _skipList->remove(key); }
+
+    Bytes MemTable::find(const Bytes& key) { return _skipList->find(key); }
 
     void MemTable::rangeBefore(const Bytes& begin, int limit,
                                std::unordered_map<Bytes, Bytes>& findPairs,
-                               std::unordered_set<Bytes>& deletedKeys) {}
+                               std::unordered_set<Bytes>& deletedKeys) {
+        _skipList->rangeBefore(begin, limit, findPairs, deletedKeys);
+    }
     void MemTable::rangeNext(const Bytes& begin, int limit,
                              std::unordered_map<Bytes, Bytes>& findPairs,
-                             std::unordered_set<Bytes>& deletedKeys) {}
+                             std::unordered_set<Bytes>& deletedKeys) {
+        _skipList->rangeNext(begin, limit, findPairs, deletedKeys);
+    }
 }// namespace LynxDB

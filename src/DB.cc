@@ -25,7 +25,7 @@
 
 namespace LynxDB {
     DB::DB(const std::filesystem::path& dbPath)
-        : _mutable(new MemTable)
+        : _mutable(new MemTable(DEFAULT_MEMTABLE_SIZE))
         , _immutable(nullptr)
         , _levelTree(new LevelTree(dbPath)) {}
 
@@ -39,7 +39,7 @@ namespace LynxDB {
         if (_mutable->full()) {
             MemTable* needMerge = _immutable;
             _immutable = _mutable;
-            _mutable = new MemTable();
+            _mutable = new MemTable(DEFAULT_MEMTABLE_SIZE);
             _levelTree->merge(needMerge);
         }
 
@@ -60,7 +60,7 @@ namespace LynxDB {
         if (_mutable->full()) {
             MemTable* needMerge = _immutable;
             _immutable = _mutable;
-            _mutable = new MemTable();
+            _mutable = new MemTable(DEFAULT_MEMTABLE_SIZE);
             _levelTree->merge(needMerge);
         }
 

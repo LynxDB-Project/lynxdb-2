@@ -19,6 +19,12 @@
 #ifndef LYNXDB_SKIPLIST_H
 #define LYNXDB_SKIPLIST_H
 
+#include <unordered_map>
+#include <unordered_set>
+#include <vector>
+
+#include "Bytes.h"
+
 namespace LynxDB {
 
     class SkipListNode {
@@ -26,7 +32,22 @@ namespace LynxDB {
         SkipListNode* _next[32];
     };
 
-    class SkipList {};
+    class SkipList {
+    public:
+        SkipList();
+        ~SkipList();
+
+        int size();
+        void insert(const Bytes& key, const Bytes& value);
+        void remove(const Bytes& key);
+        LynxDB::Bytes find(const Bytes& key);
+
+        void rangeBefore(const Bytes& begin, int limit, std::unordered_map<Bytes, Bytes>& findPairs,
+                         std::unordered_set<Bytes>& deletedKeys);
+
+        void rangeNext(const Bytes& begin, int limit, std::unordered_map<Bytes, Bytes>& findPairs,
+                       std::unordered_set<Bytes>& deletedKeys);
+    };
 
 }// namespace LynxDB
 

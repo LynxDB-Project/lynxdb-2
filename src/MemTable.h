@@ -24,11 +24,20 @@
 #include <vector>
 
 #include "Bytes.h"
+#include "SkipList.h"
 
 namespace LynxDB {
 
     class MemTable {
+    private:
+        int _maxCapacity;
+        SkipList* _skipList;
+
     public:
+        MemTable() = delete;
+        explicit MemTable(int maxCapacity);
+        ~MemTable();
+
         bool full();
         void insert(const Bytes& key, const Bytes& value);
         void remove(const Bytes& key);

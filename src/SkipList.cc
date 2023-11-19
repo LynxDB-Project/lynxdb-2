@@ -1,6 +1,6 @@
 //
 // Created by Baili Zhang on 2023/10/18.
-// 
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -19,4 +19,16 @@
 #include "SkipList.h"
 
 namespace LynxDB {
-} // LynxDB
+    SkipList::SkipList() {}
+    SkipList::~SkipList() {}
+    int SkipList::size() { return 0; }
+    void SkipList::insert(const Bytes& key, const Bytes& value) {}
+    void SkipList::remove(const Bytes& key) {}
+    LynxDB::Bytes SkipList::find(const Bytes& key) { return Bytes(""); }
+    void SkipList::rangeBefore(const Bytes& begin, int limit,
+                               std::unordered_map<Bytes, Bytes>& findPairs,
+                               std::unordered_set<Bytes>& deletedKeys) {}
+    void SkipList::rangeNext(const Bytes& begin, int limit,
+                             std::unordered_map<Bytes, Bytes>& findPairs,
+                             std::unordered_set<Bytes>& deletedKeys) {}
+}// namespace LynxDB
